@@ -1,42 +1,72 @@
-<!DOCTYPE html>
-<html lang="en">
+﻿<!DOCTYPE html>
+<html lang="en" data-theme="light">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>My Tasks</title>
     <link rel="stylesheet" href="style.css" />
+    <link rel="manifest" href="manifest.json" />
+    <meta name="theme-color" content="#5b5ef4" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-title" content="My Tasks" />
   </head>
   <body>
     <div class="app-wrapper">
       <header class="app-header">
-        <h1>My Tasks</h1>
-        <p class="subtitle">Stay on top of your day</p>
+        <div class="header-title">
+          <h1>My Tasks</h1>
+          <p class="subtitle">Stay on top of your day</p>
+        </div>
+        <button id="themeToggle" class="theme-toggle" aria-label="Switch to dark mode">&#x1F319;</button>
       </header>
 
-      <!-- Add Task -->
+      <!-- Add Task Form -->
       <div class="input-area">
-        <input
-          type="text"
-          id="taskInput"
-          placeholder="What needs to be done?"
-          autocomplete="off"
-          maxlength="200"
-        />
-        <button id="addBtn" aria-label="Add task">Add</button>
+        <div class="input-main">
+          <input type="text" id="taskInput" placeholder="What needs to be done?" autocomplete="off" maxlength="200" />
+          <button id="addBtn" aria-label="Add task">Add</button>
+        </div>
+        <div class="input-extras">
+          <select id="prioritySelect" aria-label="Priority">
+            <option value="low">Low</option>
+            <option value="medium" selected>Medium</option>
+            <option value="high">High</option>
+          </select>
+          <input type="date" id="dueDateInput" aria-label="Due date" />
+          <input type="text" id="tagInput" placeholder="Tag (optional)" maxlength="30" aria-label="Tag" />
+          <select id="repeatSelect" aria-label="Repeat">
+            <option value="">No repeat</option>
+            <option value="daily">Daily</option>
+            <option value="weekly">Weekly</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Search + Sort + Tag Filter -->
+      <div class="controls-bar">
+        <input type="search" id="searchInput" placeholder="Search tasks..." aria-label="Search tasks" />
+        <select id="sortSelect" aria-label="Sort tasks">
+          <option value="date-desc">Newest first</option>
+          <option value="date-asc">Oldest first</option>
+          <option value="priority">By priority</option>
+          <option value="alpha">A to Z</option>
+          <option value="due">By due date</option>
+        </select>
+        <select id="tagFilter" aria-label="Filter by tag">
+          <option value="all">All tags</option>
+        </select>
       </div>
 
       <!-- Filter Tabs + Counter -->
       <div class="task-meta">
         <div class="filter-tabs" role="tablist" aria-label="Task filters">
-          <button class="tab active" data-filter="all" role="tab" aria-selected="true">All</button>
-          <button class="tab" data-filter="pending" role="tab" aria-selected="false">Pending</button>
-          <button class="tab" data-filter="completed" role="tab" aria-selected="false">Completed</button>
+          <button class="tab active" data-filter="all" role="tab" aria-selected="true">All <span class="tab-count" id="countAll">0</span></button>
+          <button class="tab" data-filter="pending" role="tab" aria-selected="false">Pending <span class="tab-count" id="countPending">0</span></button>
+          <button class="tab" data-filter="completed" role="tab" aria-selected="false">Completed <span class="tab-count" id="countCompleted">0</span></button>
         </div>
         <div class="meta-right">
           <span id="taskCounter" class="task-counter">0 tasks left</span>
-          <button id="clearCompletedBtn" class="clear-btn" aria-label="Clear completed tasks">
-            Clear done
-          </button>
+          <button id="clearCompletedBtn" class="clear-btn" aria-label="Clear completed tasks">Clear done</button>
         </div>
       </div>
 
@@ -45,9 +75,15 @@
 
       <!-- Empty State -->
       <div id="emptyState" class="empty-state" hidden>
-        <span class="empty-icon">✓</span>
+        <span class="empty-icon">&#x2713;</span>
         <p id="emptyMessage">No tasks yet. Add one above!</p>
       </div>
+    </div>
+
+    <!-- Undo Toast -->
+    <div id="undoToast" class="undo-toast" hidden>
+      <span id="undoMessage">Task deleted</span>
+      <button id="undoBtn">Undo</button>
     </div>
 
     <script src="app.js"></script>

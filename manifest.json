@@ -1,0 +1,17 @@
+﻿{
+  "name": "My Tasks",
+  "short_name": "Tasks",
+  "description": "A clean, fast to-do list that works offline",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#f5f5f7",
+  "theme_color": "#5b5ef4",
+  "icons": [
+    {
+      "src": "icons/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
