@@ -440,6 +440,7 @@ body {
 
 /* Undo Toast */
 .undo-toast {
+  display: none; /* controlled via JS inline style */
   position: fixed;
   bottom: 24px;
   left: 50%;
@@ -448,13 +449,15 @@ body {
   color: var(--bg);
   padding: 12px 20px;
   border-radius: var(--radius);
-  display: flex;
   align-items: center;
   gap: 16px;
   box-shadow: 0 8px 32px rgba(0,0,0,.2);
   font-size: 0.9rem;
   z-index: 1000;
   white-space: nowrap;
+}
+.undo-toast.is-visible {
+  display: flex;
   animation: slideUp 200ms ease;
 }
 @keyframes slideUp {

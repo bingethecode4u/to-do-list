@@ -181,8 +181,8 @@ function deleteSubtask(taskId, subtaskId) {
 function showUndo(message) {
   clearTimeout(undoTimer);
   undoMessage.textContent = message;
-  undoToast.hidden = false;
-  undoTimer = setTimeout(function() { undoToast.hidden = true; undoStack = null; }, 5000);
+  undoToast.style.display = "flex";
+  undoTimer = setTimeout(function() { undoToast.style.display = "none"; undoStack = null; }, 5000);
 }
 
 function undo() {
@@ -190,7 +190,7 @@ function undo() {
   tasks = undoStack.tasks;
   undoStack = null;
   clearTimeout(undoTimer);
-  undoToast.hidden = true;
+  undoToast.style.display = "none";
   saveTasks();
   render();
 }
@@ -534,6 +534,7 @@ if ("serviceWorker" in navigator) {
 }
 
 // Boot
+undoToast.style.display = "none";
 loadTheme();
 loadTasks();
 render();
