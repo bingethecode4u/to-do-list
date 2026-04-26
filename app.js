@@ -396,7 +396,7 @@ function createTaskElement(task) {
 function buildSubtasksArea(task) {
   var area = document.createElement("div");
   area.className = "subtasks-area";
-  area.hidden = true;
+  area.style.display = "none";
 
   if (task.subtasks.length > 0) {
     var subList = document.createElement("ul");
@@ -450,15 +450,17 @@ function buildSubtasksToggle(task, area) {
   var done  = task.subtasks.filter(function(s) { return s.completed; }).length;
   var total = task.subtasks.length;
   function label() {
-    var arrow = area.hidden ? "\u25B8" : "\u25BE";
+    var isOpen = area.style.display !== "none";
+    var arrow = isOpen ? "\u25BE" : "\u25B8";
     return total > 0 ? arrow + " " + done + "/" + total + " subtask" + (total !== 1 ? "s" : "") : arrow + " Add subtask";
   }
   btn.textContent = label();
   btn.setAttribute("aria-expanded", "false");
   btn.addEventListener("click", function() {
-    area.hidden = !area.hidden;
+    var isOpen = area.style.display !== "none";
+    area.style.display = isOpen ? "none" : "flex";
     btn.textContent = label();
-    btn.setAttribute("aria-expanded", String(!area.hidden));
+    btn.setAttribute("aria-expanded", String(!isOpen));
   });
   return btn;
 }
